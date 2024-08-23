@@ -15,15 +15,19 @@ export class ProductService {
     }
 
     async create(dto: ProductForCreateDto): Promise<Product> {
-        const product = new Product();
-        product.name = dto.name;
-        product.description = dto.description;
-        product.price = dto.price;
-        product.quantity = dto.quantity;
-        product.category = dto.category;
-        product.status = dto.status ?? Status.ACTIVE;
+        try {
+            const product = new Product();
+            product.name = dto.name;
+            product.description = dto.description;
+            product.price = dto.price;
+            product.quantity = dto.quantity;
+            product.category = dto.category;
+            product.status = dto.status ?? Status.ACTIVE;
 
-        return this.productRepository.save(product);
+            return this.productRepository.save(product);
+        } catch (error) {
+            Logger.error(error);
+        }
     }
 
     async update(id: number, dto: ProductForCreateDto): Promise<Product> {
